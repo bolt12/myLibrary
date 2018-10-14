@@ -1,6 +1,7 @@
 module MyPrelude
     where
 
+import Data.Char (isDigit)
 import Prelude hiding (
                       enumFromTo, 
                       enumFromThenTo, 
@@ -21,10 +22,26 @@ import Prelude hiding (
                       isPrefixOf,
                       isSuffixOf,
                       isSubsequenceOf,
-                      elemIndices,
+                      elemIndexes,
                       nub,
                       delete,
-                      (\\)
+                      (\\),
+                      union,
+                      intersect,
+                      insert,
+                      maximum,
+                      minimum,
+                      sum,
+                      product,
+                      and,
+                      or,
+                      unwords,
+                      unlines,
+                      maxIndexes,
+                      hasRepeated,
+                      digits,
+                      oddIndexes,
+                      evenIndexes
                       )
 
 enumFromTo :: Int -> Int -> [Int]
@@ -111,8 +128,8 @@ isSubsequenceOf [] _ = True
 isSubsequenceOf _ [] = False
 isSubsequenceOf (x:xs) (y:ys) = if x == y then isSubsequenceOf xs ys else isSubsequenceOf (x:xs) ys
 
-elemIndices :: Eq a => a -> [a] -> [Int]
-elemIndices x l = go 0 x l
+elemIndexes :: Eq a => a -> [a] -> [Int]
+elemIndexes x l = go 0 x l
     where
         go _ x [] = []
         go i x (h:t) = if x == h then i : go (i+1) x t else go (i+1) x t
@@ -135,3 +152,69 @@ union l1 l2 = l1 ++ union' l2 l1
         union' [] _ = []
         union' (x:xs) l | x `elem` l = union' xs l
                         | otherwise = x : union' xs (x:l)
+                    
+intersect :: Eq a => [a] -> [a] -> [a]
+intersect l1 l2 = filter ((flip elem) l2) l1
+
+insert :: Ord a => a -> [a] -> [a]
+insert x (h:t) | x > h = h : insert x t
+               | otherwise = x : h : t
+
+maximum :: Ord a => [a] -> a
+maximum = foldr1 max
+
+minimum :: Ord a => [a] -> a
+minimum = foldr1 min
+
+sum :: Num a => [a] -> a
+sum = foldr (+) 0
+
+product :: Num a => [a] -> a
+product = foldr (*) 1
+
+and :: [Bool] -> Bool
+and = foldr (&&) True
+
+or :: [Bool] -> Bool
+or = foldr (||) False
+
+unwords :: [String] -> String
+unwords [] = ""
+unwords l  = foldr1 addSpace l
+    where
+        addSpace x y = x ++ " " ++ y
+
+unlines :: [String] -> String
+unlines [] = ""
+unlines l = foldr1 addLine l
+    where
+        addLine x y = x ++ "\n" ++ y
+
+maxIndex :: Ord a => [a] -> Int
+maxIndex (x:xs) = go 0 0 x xs
+    where
+        go _ m _ [] = m
+        go n m e (h:t) | e > h = go (n+1) m e t
+                       | otherwise = go (n+1) (n+1) h t
+
+hasRepeated :: Eq a => [a] -> Bool
+hasRepeated [] = False
+hasRepeated (x:xs) | any (==x) xs = True
+                   | otherwise = hasRepeated xs
+
+digits :: String -> String
+digits = filter (isDigit)
+
+oddIndexes :: [a] -> [a]
+oddIndexes (x:xs) = go 1 xs
+    where
+        go _ [] = []
+        go i (h:t) | i `mod` 2 /= 0 = h : go (i+1) t
+                   | otherwise = go (i+1) t
+
+evenIndexes :: [a] -> [a]
+evenIndexes l = go 0 l
+    where
+        go _ [] = []
+        go i (h:t) | i `mod` 2 == 0 = h : go (i+1) t
+                   | otherwise = go (i+1) t

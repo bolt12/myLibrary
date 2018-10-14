@@ -26,3 +26,19 @@ A not so naive implementation attempt of some of the pre defined functions in Ha
 - `delete`,
 - `(\\\)`,
 - `union`
+- `intersect`,
+- `insert`,
+- `maximum`,
+- `minimum`,
+- `sum`,
+- `product`,
+- `and`,
+- `or`,
+- `unwords`,
+- `unlines`,
+- `maxIndexes`,
+- `hasRepeated`,
+- `digits`,
+- `oddIndexes`,
+- `evenIndexes`
+
