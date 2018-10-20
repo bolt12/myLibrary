@@ -22,7 +22,6 @@ import Prelude hiding (
                       isPrefixOf,
                       isSuffixOf,
                       isSubsequenceOf,
-                      elemIndexes,
                       nub,
                       delete,
                       (\\),
@@ -37,11 +36,6 @@ import Prelude hiding (
                       or,
                       unwords,
                       unlines,
-                      maxIndexes,
-                      hasRepeated,
-                      digits,
-                      oddIndexes,
-                      evenIndexes
                       )
 
 enumFromTo :: Int -> Int -> [Int]
@@ -157,6 +151,7 @@ intersect :: Eq a => [a] -> [a] -> [a]
 intersect l1 l2 = filter ((flip elem) l2) l1
 
 insert :: Ord a => a -> [a] -> [a]
+insert x [] = [x]
 insert x (h:t) | x > h = h : insert x t
                | otherwise = x : h : t
 
@@ -218,3 +213,42 @@ evenIndexes l = go 0 l
         go _ [] = []
         go i (h:t) | i `mod` 2 == 0 = h : go (i+1) t
                    | otherwise = go (i+1) t
+
+isSorted :: Ord a => [a] -> Bool
+isSorted [] = True
+isSorted [x] = True
+isSorted (x:y:xs) | x < y = isSorted (y:xs)
+                  | otherwise = False
+
+iSort :: Ord a => [a] -> [a]
+iSort [] = []
+iSort (x:xs) = insert x $ iSort xs
+
+elemMSet :: Eq a => a -> [(a, Int)] -> Bool
+elemMSet x [] = False
+elemMSet x ((a,b):xs) | x == a = True
+                      | otherwise = elemMSet x xs
+
+lengthMSet :: [(a, Int)] -> Int
+lengthMSet = foldr ((+) . snd) 0
+
+convertMSet :: [(a, Int)] -> [a]
+convertMSet = concatMap (uncurry (flip replicate))
+
+insertMSet :: Eq a => a -> [(a, Int)] -> [(a, Int)]
+insertMSet x [] = [(x, 1)]
+insertMSet x ((a,b):xs) | x == a = (a,b+1):xs
+                        | otherwise = (a,b):insertMSet x xs
+
+removeMSet :: Eq a => a -> [(a, Int)] -> [(a, Int)]
+removeMSet x [] = []
+removeMSet x ((a,b):xs) | x == a && b > 1 = (a,b-1):xs
+                        | x == a && b <= 1 = xs
+                        | otherwise = (a,b):removeMSet x xs
+
+makeMSet :: Ord a => [a] -> [(a, Int)]
+makeMSet = map ( (,) <$> head <*> length ) . group 
+-- (,) <$> head <*> length <==> 
+-- (,) . head <*> length <==> 
+-- \x -> ((,) . head) x (g x) <==> 
+-- \x -> (,) (head x) (length x)

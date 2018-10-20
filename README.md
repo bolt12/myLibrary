@@ -1,44 +1,50 @@
 # myPrelude
 A not so naive implementation attempt of some of the pre defined functions in Haskell's Prelude and more.
-
 # List of functions implemented
-- `enumFromTo`, 
-- `enumFromThenTo`, 
-- `concat`, 
-- `last`, 
-- `init`, 
-- `(!!)`, 
-- `reverse`, 
-- `take`, 
-- `drop`, 
-- `zip`,
-- `elem`,
-- `replicate`,
-- `intersperce`,
-- `group`,
-- `inits`,
-- `tails`,
-- `isPrefixOf`,
-- `isSuffixOf`,
-- `isSubsequenceOf`,
-- `elemIndices`,
-- `nub`,
-- `delete`,
-- `(\\\)`,
-- `union`
-- `intersect`,
-- `insert`,
-- `maximum`,
-- `minimum`,
-- `sum`,
-- `product`,
-- `and`,
-- `or`,
-- `unwords`,
-- `unlines`,
-- `maxIndexes`,
-- `hasRepeated`,
-- `digits`,
-- `oddIndexes`,
-- `evenIndexes`
-
+- `enumFromTo :: Int -> Int -> [Int]`
+- `enumFromThenTo :: Int -> Int -> Int -> [Int]`
+- `concat :: [a] -> [a] -> [a]`
+- `last :: [a] -> a`
+- `init :: [a] -> [a]`
+- `(!!) :: [a] -> Int -> a`
+- `reverse :: [a] -> [a]`
+- `take :: Int -> [a] -> [a]`
+- `drop :: Int -> [a] -> [a]`
+- `zip :: [a] -> [b] -> [(a,b)]`
+- `elem :: Eq a => a -> [a] -> Bool`
+- `replicate :: Int -> a -> [a]`
+- `intersperce :: a -> [a] -> [a]`
+- `group :: Eq a => [a] -> [[a]]`
+- `inits :: [a] -> [[a]]`
+- `tails :: [a] -> [[a]]`
+- `isPrefixOf :: Eq a => [a] -> [a] -> Bool`
+- `isSuffixOf :: Eq a => [a] -> [a] -> Bool`
+- `isSubsequenceOf :: Eq a => [a] -> [a] -> Bool`
+- `elemIndexes :: Eq a => a -> [a] -> [Int]`
+- `nub :: Eq a => [a] -> [a]`
+- `delete :: Eq a => a -> [a] -> [a]`
+- `(\\) :: Eq a => [a] -> [a] -> [a]`
+- `union :: Eq a => [a] -> [a] -> [a]`
+- `intersect :: Eq a => [a] -> [a] -> [a]`
+- `insert :: Ord a => a -> [a] -> [a]`
+- `maximum :: Ord a => [a] -> a`
+- `minimum :: Ord a => [a] -> a`
+- `sum :: Num a => [a] -> a`
+- `product :: Num a => [a] -> a`
+- `and :: [Bool] -> Bool`
+- `or :: [Bool] -> Bool`
+- `unwords :: [String] -> String`
+- `unlines :: [String] -> String`
+- `maxIndex :: Ord a => [a] -> Int`
+- `hasRepeated :: Eq a => [a] -> Bool`
+- `digits :: String -> String`
+- `oddIndexes :: [a] -> [a]`
+- `evenIndexes :: [a] -> [a]`
+- `isSorted :: Ord a => [a] -> Bool`
+- `iSort :: Ord a => [a] -> [a]`
+- `elemMSet :: Eq a => a -> [(a, Int)] -> Bool`
+- `lengthMSet :: [(a, Int)] -> Int`
+- `convertMSet :: [(a, Int)] -> [a]`
+- `insertMSet :: Eq a => a -> [(a, Int)] -> [(a, Int)]`
+- `removeMSet :: Eq a => a -> [(a, Int)] -> [(a, Int)]`
+- `makeMSet :: Ord a => [a] -> [(a, Int)]`
